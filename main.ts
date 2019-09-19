@@ -709,7 +709,7 @@ namespace hicbit {
 	
     /**
         * TM1640 LED display
-        */
+        
     export class hicbit_TM1640LEDs {
         buf: Buffer;
         clk: DigitalPin;
@@ -717,10 +717,10 @@ namespace hicbit {
         _ON: number;
         brightness: number;
         count: number;  // number of LEDs
-
+*/
         /**
          * initial TM1640
-         */
+        
         init(): void {
             pins.digitalWritePin(this.clk, 0);
             pins.digitalWritePin(this.dio, 0);
@@ -728,45 +728,45 @@ namespace hicbit {
             this.buf = pins.createBuffer(this.count);
             this.clear();
         }
-
+ */
         /**
          * Start 
-         */
+         
         _start() {
             pins.digitalWritePin(this.dio, 0);
             pins.digitalWritePin(this.clk, 0);
         }
-
+*/
         /**
          * Stop
-         */
+         
         _stop() {
             pins.digitalWritePin(this.dio, 0);
             pins.digitalWritePin(this.clk, 1);
             pins.digitalWritePin(this.dio, 1);
         }
-
+*/
         /**
          * send command1
-         */
+        
         _write_data_cmd() {
             this._start();
             this._write_byte(TM1640_CMD1);
             this._stop();
         }
-
+ */
         /**
          * send command3
-         */
+         
         _write_dsp_ctrl() {
             this._start();
             this._write_byte(TM1640_CMD3 | this._ON | this.brightness);
             this._stop();
         }
-
+*/
         /**
          * send a byte to 2-wire interface
-         */
+         
         _write_byte(b: number) {
             for (let i = 0; i < 8; i++) {
                 pins.digitalWritePin(this.clk, 0);
@@ -789,10 +789,10 @@ namespace hicbit {
             this._write_data_cmd();
             this._write_dsp_ctrl();
         }
-
+*/
         /**
          * set data to TM1640, with given bit
-         */
+         
         _dat(bit: number, dat: number) {
             this._write_data_cmd();
             this._start();
@@ -857,14 +857,14 @@ namespace hicbit {
             this._write_data_cmd();
             this._write_dsp_ctrl();
         }
-    }
+    }*/
     /**
      * 创建 TM1640 对象.
      * @param clk the CLK pin for TM1640, eg: DigitalPin.P1
      * @param dio the DIO pin for TM1640, eg: DigitalPin.P2
      * @param intensity the brightness of the LED, eg: 7
      * @param count the count of the LED, eg: 4
-     */
+     
     function hicbit_TM1640create(port: hicbit_digitaltubePort, intensity: number, count: number): hicbit_TM1640LEDs {
         let digitaltube = new hicbit_TM1640LEDs();
         switch (port) {
@@ -883,46 +883,46 @@ namespace hicbit {
         digitaltube.brightness = intensity;
         digitaltube.init();
         return digitaltube;
-    }
+    }*/
 
   /**
      * @param clk the CLK pin for TM1640, eg: DigitalPin.P1
      * @param dio the DIO pin for TM1640, eg: DigitalPin.P2
      * @param intensity the brightness of the LED, eg: 7
      * @param count the count of the LED, eg: 4
-     */
+     
     //% weight=77 blockId=hicbit_digitaltube block="digitaltube|%port|intensity %intensity|LED count %count"
     export function hicbit_digitaltube(port: hicbit_digitaltubePort, intensity: number, count: number) {
         Digitaltube = hicbit_TM1640create(port, intensity, count);
-    }
+    }*/
 
     /**
      * show a number. 
      * @param num is a number, eg: 0
-     */
+     
     //% weight=76 blockId=hicbit_showNumber block="digitaltube show number| %num"
     export function hicbit_showNumber(num: number)  {
         Digitaltube.showNumber(num);
-    }
+    }*/
 
     /**
      * show a number in given position. 
      * @param num number will show, eg: 5
      * @param bit the position of the LED, eg: 0
-     */
+     
     //% weight=75 blockId=hicbit_showbit block="digitaltube show digit| %num|at %bit"
     export function hicbit_showbit(num: number = 5, bit: number = 0) {
         Digitaltube.showbit(num, bit);
-    }
+    }*/
 
     /**
      * show a hex number. 
      * @param num is a hex number, eg: 0
-     */
+     
     //% weight=74 blockId=hicbit_showhex block="digitaltube show hex number| %num"
     export function hicbit_showhex(num: number) {
         Digitaltube.showHex(num);
-    }
+    }*/
 
     /**
      * show or hide dot point. 
