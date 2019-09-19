@@ -1380,18 +1380,38 @@ namespace hicbit {
     /**
      * Get the distance of ultrasonic detection to the obstacle 
      */
-    //% weight=81 blockId=hicbit_ultrasonic  block="Ultrasonic|port %port|distance(cm)"
+    //% weight=20 blockId=hicbit_ultrasonic  block="Ultrasonic|port %port|distance(cm)"
     export function hicbit_ultrasonic(port: hicbit_ultrasonicPort): number {
         let echoPin: DigitalPin;
         let trigPin: DigitalPin;
         switch (port) {
             case hicbit_ultrasonicPort.port1:
-                echoPin = DigitalPin.P2;
+                echoPin = DigitalPin.P15;
                 trigPin = DigitalPin.P1;
                 break;
             case hicbit_ultrasonicPort.port2:
+                echoPin = DigitalPin.P13;
+                trigPin = DigitalPin.P2;
+                break;
+            case hicbit_ultrasonicPort.port3:
                 echoPin = DigitalPin.P14;
-                trigPin = DigitalPin.P13;
+                trigPin = DigitalPin.P3;
+                break;
+            case hicbit_ultrasonicPort.port4:
+                echoPin = DigitalPin.P5;
+                trigPin = DigitalPin.P4;
+                break;
+            case hicbit_ultrasonicPort.port5:
+                echoPin = DigitalPin.P16;
+                trigPin = DigitalPin.P10;
+                break;
+            case hicbit_ultrasonicPort.port7:
+                echoPin = DigitalPin.P7;
+                trigPin = DigitalPin.P6;
+                break;
+            case hicbit_ultrasonicPort.port8:
+                echoPin = DigitalPin.P11;
+                trigPin = DigitalPin.P9;
                 break;
         }
         pins.setPull(echoPin, PinPullMode.PullNone);
