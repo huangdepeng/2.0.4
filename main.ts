@@ -289,7 +289,7 @@ namespace hicbit {
     */
     //% weight=100 blockId=hicbit_Init block="Initialize hicbit"
     export function hicbit_Init() {
-        //hicbit_initRGBLight();
+        hicbit_initRGBLight();
         serial.redirect(
             SerialPin.P12,
             SerialPin.P8,
@@ -323,11 +323,11 @@ namespace hicbit {
     let macStr: string = "";
     let actiongroup_finished = true;
     
-    let Digitaltube:hicbit_TM1640LEDs
-    let TM1640_CMD1 = 0x40;
-    let TM1640_CMD2 = 0xC0;
-    let TM1640_CMD3 = 0x80;
-    let _SEGMENTS = [0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71];
+    // let Digitaltube:hicbit_TM1640LEDs
+    // let TM1640_CMD1 = 0x40;
+    // let TM1640_CMD2 = 0xC0;
+    // let TM1640_CMD3 = 0x80;
+    // let _SEGMENTS = [0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71];
 	
     /**
     * Get the handle command.
@@ -1475,57 +1475,57 @@ namespace hicbit {
 	
     /**
 	 * Initialize RGB
-	 
+	 */
     function hicbit_initRGBLight() {
         if (!lhRGBLight) {
             lhRGBLight = hicbitRGBLight.create(DigitalPin.P15, 6, hicbitRGBPixelMode.RGB);
         }
         hicbit_clearLight();
-    }*/
+    }
 
     /**
          * Set the brightness of the strip. This flag only applies to future operation.
          * @param brightness a measure of LED brightness in 0-255. eg: 255
-    
+    */
     //% blockId="hicbit_setBrightness" block="set brightness %brightness"
-    //% weight=68
+    //% weight=74
     export function hicbit_setBrightness(brightness: number): void {
         lhRGBLight.setBrightness(brightness);
-    }*/
+    }
 
     /**
      * Set the color of the colored lights, after finished the setting please perform  the display of colored lights.
-     
-    //% weight=67 blockId=hicbit_setPixelRGB block="Set|%lightoffset|color to %rgb"
+     */
+    //% weight=73 blockId=hicbit_setPixelRGB block="Set|%lightoffset|color to %rgb"
     export function hicbit_setPixelRGB(lightoffset: hicbitLights, rgb: hicbitRGBColors) {
         lhRGBLight.setPixelColor(lightoffset, rgb);
-    }*/
+    }
 
 
     /**
      * Set RGB Color argument
-     
-    //% weight=66 blockId=hicbit_setPixelRGBArgs block="Set|%lightoffset|color to %rgb"
+     */
+    //% weight=72 blockId=hicbit_setPixelRGBArgs block="Set|%lightoffset|color to %rgb"
     export function hicbit_setPixelRGBArgs(lightoffset: hicbitLights, rgb: number) {
         lhRGBLight.setPixelColor(lightoffset, rgb);
-    }*/
+    }
 
 
     /**
      * Display the colored lights, and set the color of the colored lights to match the use. After setting the color of the colored lights, the color of the lights must be displayed.
-     
-    //% weight=65 blockId=hicbit_showLight block="Show light"
+     */
+    //% weight=71 blockId=hicbit_showLight block="Show light"
     export function hicbit_showLight() {
         lhRGBLight.show();
-    }*/
+    }
 
     /**
      * Clear the color of the colored lights and turn off the lights.
-     
-    //% weight=64 blockGap=50 blockId=hicbit_clearLight block="Clear light"
+     */
+    //% weight=70 blockGap=50 blockId=hicbit_clearLight block="Clear light"
     export function hicbit_clearLight() {
         lhRGBLight.clear();
-    }*/
+    }
 
     /**
 	 * Initialize Light belt
