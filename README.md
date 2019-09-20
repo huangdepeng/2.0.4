@@ -1,6 +1,6 @@
 # hicbit
 
-Blocks for LOBOT hicbit
+Blocks for hicbit
 ## License
 
 MIT
