@@ -53,11 +53,7 @@
 	"hicbit.hicbit_intensity":"设置显示亮度(0-8)",
 	"hicbit.hicbit_off":"关闭显示功能(不会影响显示内容)",
 	"hicbit.hicbit_on":"开启显示",
-	"hicbit.hicbit_clear":"清除显示",
 	"hicbit.Clearscreen":"清屏操作",
 	"hicbit.setDisplay":"屏幕显示设置（行数，内容，数值，量程）",
-	"hicbit.hicbit_belt_initRGBLight":"灯带端口初始化",
-	"hicbit.hicbit_belt_setPixelRGB":"设置灯带颜色",
-	"hicbit.hicbit_belt_showLight":"开启灯带",
-	"hicbit.hicbit_belt_clearLight":"关闭灯带"
+	"hicbit.hicbit_clear":"清除显示"
 }

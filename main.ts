@@ -46,17 +46,7 @@ namespace hicbit {
         //% block="Port 1"
         port1 = 0x01,
         //% block="Port 2"
-        port2 = 0x02,
-        //% block="Port 3"
-        port3 = 0x03,
-        //% block="Port 4"
-        port4 = 0x04,
-        //% block="Port 5"
-        port5 = 0x05,
-        //% block="Port 7"
-        port7 = 0x06,
-        //% block="Port 8"
-        port8 = 0x07
+        port2 = 0x02
     }
 
     export enum hicbit_touchKeyPort {
@@ -323,11 +313,11 @@ namespace hicbit {
     let macStr: string = "";
     let actiongroup_finished = true;
     
-    // let Digitaltube:hicbit_TM1640LEDs
-    // let TM1640_CMD1 = 0x40;
-    // let TM1640_CMD2 = 0xC0;
-    // let TM1640_CMD3 = 0x80;
-    // let _SEGMENTS = [0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71];
+    let Digitaltube:hicbit_TM1640LEDs
+    let TM1640_CMD1 = 0x40;
+    let TM1640_CMD2 = 0xC0;
+    let TM1640_CMD3 = 0x80;
+    let _SEGMENTS = [0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71];
 	
     /**
     * Get the handle command.
@@ -709,7 +699,7 @@ namespace hicbit {
 	
     /**
         * TM1640 LED display
-        
+        */
     export class hicbit_TM1640LEDs {
         buf: Buffer;
         clk: DigitalPin;
@@ -717,10 +707,10 @@ namespace hicbit {
         _ON: number;
         brightness: number;
         count: number;  // number of LEDs
-*/
+
         /**
          * initial TM1640
-        
+         */
         init(): void {
             pins.digitalWritePin(this.clk, 0);
             pins.digitalWritePin(this.dio, 0);
@@ -728,45 +718,45 @@ namespace hicbit {
             this.buf = pins.createBuffer(this.count);
             this.clear();
         }
- */
+
         /**
          * Start 
-         
+         */
         _start() {
             pins.digitalWritePin(this.dio, 0);
             pins.digitalWritePin(this.clk, 0);
         }
-*/
+
         /**
          * Stop
-         
+         */
         _stop() {
             pins.digitalWritePin(this.dio, 0);
             pins.digitalWritePin(this.clk, 1);
             pins.digitalWritePin(this.dio, 1);
         }
-*/
+
         /**
          * send command1
-        
+         */
         _write_data_cmd() {
             this._start();
             this._write_byte(TM1640_CMD1);
             this._stop();
         }
- */
+
         /**
          * send command3
-         
+         */
         _write_dsp_ctrl() {
             this._start();
             this._write_byte(TM1640_CMD3 | this._ON | this.brightness);
             this._stop();
         }
-*/
+
         /**
          * send a byte to 2-wire interface
-         
+         */
         _write_byte(b: number) {
             for (let i = 0; i < 8; i++) {
                 pins.digitalWritePin(this.clk, 0);
@@ -789,10 +779,10 @@ namespace hicbit {
             this._write_data_cmd();
             this._write_dsp_ctrl();
         }
-*/
+
         /**
          * set data to TM1640, with given bit
-         
+         */
         _dat(bit: number, dat: number) {
             this._write_data_cmd();
             this._start();
@@ -857,14 +847,14 @@ namespace hicbit {
             this._write_data_cmd();
             this._write_dsp_ctrl();
         }
-    }*/
+    }
     /**
      * 创建 TM1640 对象.
      * @param clk the CLK pin for TM1640, eg: DigitalPin.P1
      * @param dio the DIO pin for TM1640, eg: DigitalPin.P2
      * @param intensity the brightness of the LED, eg: 7
      * @param count the count of the LED, eg: 4
-     
+     */
     function hicbit_TM1640create(port: hicbit_digitaltubePort, intensity: number, count: number): hicbit_TM1640LEDs {
         let digitaltube = new hicbit_TM1640LEDs();
         switch (port) {
@@ -883,89 +873,89 @@ namespace hicbit {
         digitaltube.brightness = intensity;
         digitaltube.init();
         return digitaltube;
-    }*/
+    }
 
   /**
      * @param clk the CLK pin for TM1640, eg: DigitalPin.P1
      * @param dio the DIO pin for TM1640, eg: DigitalPin.P2
      * @param intensity the brightness of the LED, eg: 7
      * @param count the count of the LED, eg: 4
-     
+     */
     //% weight=77 blockId=hicbit_digitaltube block="digitaltube|%port|intensity %intensity|LED count %count"
     export function hicbit_digitaltube(port: hicbit_digitaltubePort, intensity: number, count: number) {
         Digitaltube = hicbit_TM1640create(port, intensity, count);
-    }*/
+    }
 
     /**
      * show a number. 
      * @param num is a number, eg: 0
-     
+     */
     //% weight=76 blockId=hicbit_showNumber block="digitaltube show number| %num"
     export function hicbit_showNumber(num: number)  {
         Digitaltube.showNumber(num);
-    }*/
+    }
 
     /**
      * show a number in given position. 
      * @param num number will show, eg: 5
      * @param bit the position of the LED, eg: 0
-     
+     */
     //% weight=75 blockId=hicbit_showbit block="digitaltube show digit| %num|at %bit"
     export function hicbit_showbit(num: number = 5, bit: number = 0) {
         Digitaltube.showbit(num, bit);
-    }*/
+    }
 
     /**
      * show a hex number. 
      * @param num is a hex number, eg: 0
-     
+     */
     //% weight=74 blockId=hicbit_showhex block="digitaltube show hex number| %num"
     export function hicbit_showhex(num: number) {
         Digitaltube.showHex(num);
-    }*/
+    }
 
     /**
      * show or hide dot point. 
      * @param bit is the position, eg: 1
      * @param show is show/hide dp, eg: true
-     
+     */
     //% weight=73 blockId=hicbit_showDP block="digitaltube DotPoint at| %bit|show %show"
     export function hicbit_showDP(bit: number = 1, show: boolean = true) {
         Digitaltube.showDP(bit, show);
-    } */
+    } 
 
     /**
      * set TM1640 intensity, range is [0-8], 0 is off.
      * @param val the brightness of the TM1640, eg: 7
-     
+     */
     //% weight=72 blockId=hicbit_intensity block=" digitaltube set intensity %val"
     export function hicbit_intensity(val: number = 7) {
         Digitaltube.intensity(val);
-    } */
+    } 
 
     /**
      * turn off LED. 
-     
+     */
     //% weight=71 blockId=hicbit_off block="turn off digitaltube"
     export function hicbit_off() {
         Digitaltube.off();
-    }*/
+    }
 
     /**
      * turn on LED. 
-     
+     */
     //% weight=70 blockId=hicbit_on block="turn on digitaltube"
     export function hicbit_on() {
         Digitaltube.on();
-    }*/
+    }
 
     /**
      * clear LED. 
-     
+     */
     //%weight=69 blockId=hicbit_clear blockGap=50 block="clear digitaltube"
     export function hicbit_clear() {
         Digitaltube.clear();
-    } */ 
+    }  
 
     const APDS9960_I2C_ADDR = 0x39;
     const APDS9960_ID_1 = 0xA8;
@@ -1380,38 +1370,18 @@ namespace hicbit {
     /**
      * Get the distance of ultrasonic detection to the obstacle 
      */
-    //% weight=20 blockId=hicbit_ultrasonic  block="Ultrasonic|port %port|distance(cm)"
+    //% weight=81 blockId=hicbit_ultrasonic  block="Ultrasonic|port %port|distance(cm)"
     export function hicbit_ultrasonic(port: hicbit_ultrasonicPort): number {
         let echoPin: DigitalPin;
         let trigPin: DigitalPin;
         switch (port) {
             case hicbit_ultrasonicPort.port1:
-                echoPin = DigitalPin.P15;
+                echoPin = DigitalPin.P2;
                 trigPin = DigitalPin.P1;
                 break;
             case hicbit_ultrasonicPort.port2:
-                echoPin = DigitalPin.P13;
-                trigPin = DigitalPin.P2;
-                break;
-            case hicbit_ultrasonicPort.port3:
                 echoPin = DigitalPin.P14;
-                trigPin = DigitalPin.P3;
-                break;
-            case hicbit_ultrasonicPort.port4:
-                echoPin = DigitalPin.P5;
-                trigPin = DigitalPin.P4;
-                break;
-            case hicbit_ultrasonicPort.port5:
-                echoPin = DigitalPin.P16;
-                trigPin = DigitalPin.P10;
-                break;
-            case hicbit_ultrasonicPort.port7:
-                echoPin = DigitalPin.P7;
-                trigPin = DigitalPin.P6;
-                break;
-            case hicbit_ultrasonicPort.port8:
-                echoPin = DigitalPin.P11;
-                trigPin = DigitalPin.P9;
+                trigPin = DigitalPin.P13;
                 break;
         }
         pins.setPull(echoPin, PinPullMode.PullNone);
@@ -1488,7 +1458,7 @@ namespace hicbit {
          * @param brightness a measure of LED brightness in 0-255. eg: 255
     */
     //% blockId="hicbit_setBrightness" block="set brightness %brightness"
-    //% weight=74
+    //% weight=68
     export function hicbit_setBrightness(brightness: number): void {
         lhRGBLight.setBrightness(brightness);
     }
@@ -1496,7 +1466,7 @@ namespace hicbit {
     /**
      * Set the color of the colored lights, after finished the setting please perform  the display of colored lights.
      */
-    //% weight=73 blockId=hicbit_setPixelRGB block="Set|%lightoffset|color to %rgb"
+    //% weight=67 blockId=hicbit_setPixelRGB block="Set|%lightoffset|color to %rgb"
     export function hicbit_setPixelRGB(lightoffset: hicbitLights, rgb: hicbitRGBColors) {
         lhRGBLight.setPixelColor(lightoffset, rgb);
     }
@@ -1505,7 +1475,7 @@ namespace hicbit {
     /**
      * Set RGB Color argument
      */
-    //% weight=72 blockId=hicbit_setPixelRGBArgs block="Set|%lightoffset|color to %rgb"
+    //% weight=66 blockId=hicbit_setPixelRGBArgs block="Set|%lightoffset|color to %rgb"
     export function hicbit_setPixelRGBArgs(lightoffset: hicbitLights, rgb: number) {
         lhRGBLight.setPixelColor(lightoffset, rgb);
     }
@@ -1514,7 +1484,7 @@ namespace hicbit {
     /**
      * Display the colored lights, and set the color of the colored lights to match the use. After setting the color of the colored lights, the color of the lights must be displayed.
      */
-    //% weight=71 blockId=hicbit_showLight block="Show light"
+    //% weight=65 blockId=hicbit_showLight block="Show light"
     export function hicbit_showLight() {
         lhRGBLight.show();
     }
@@ -1522,7 +1492,7 @@ namespace hicbit {
     /**
      * Clear the color of the colored lights and turn off the lights.
      */
-    //% weight=70 blockGap=50 blockId=hicbit_clearLight block="Clear light"
+    //% weight=64 blockGap=50 blockId=hicbit_clearLight block="Clear light"
     export function hicbit_clearLight() {
         lhRGBLight.clear();
     }
@@ -1530,12 +1500,12 @@ namespace hicbit {
     /**
 	 * Initialize Light belt
 	 */
-    //% weight=69 blockId=hicbit_belt_initRGBLight block="Initialize light belt at port %port"
+    //% weight=63 blockId=hicbit_belt_initRGBLight block="Initialize light belt at port %port"
     export function hicbit_belt_initRGBLight(port: hicbit_ultrasonicPort) {
         switch (port) {
             case hicbit_ultrasonicPort.port1:
                 if (!lhRGBLightBelt) {
-                    lhRGBLightBelt = hicbitRGBLight.create(DigitalPin.P15, 30, hicbitRGBPixelMode.RGB);
+                    lhRGBLightBelt = hicbitRGBLight.create(DigitalPin.P1, 30, hicbitRGBPixelMode.RGB);
                 }
                 break;
             case hicbit_ultrasonicPort.port2:
@@ -1543,40 +1513,15 @@ namespace hicbit {
                     lhRGBLightBelt = hicbitRGBLight.create(DigitalPin.P13, 30, hicbitRGBPixelMode.RGB);
                 }
                 break;
-            case hicbit_ultrasonicPort.port3:
-                if (!lhRGBLightBelt) {
-                    lhRGBLightBelt = hicbitRGBLight.create(DigitalPin.P14, 30, hicbitRGBPixelMode.RGB);
-                }
-                break;
-            case hicbit_ultrasonicPort.port4:
-                if (!lhRGBLightBelt) {
-                    lhRGBLightBelt = hicbitRGBLight.create(DigitalPin.P5, 30, hicbitRGBPixelMode.RGB);
-                }
-                break;
-            case hicbit_ultrasonicPort.port5:
-                if (!lhRGBLightBelt) {
-                    lhRGBLightBelt = hicbitRGBLight.create(DigitalPin.P16, 30, hicbitRGBPixelMode.RGB);
-                }
-                break;
-            case hicbit_ultrasonicPort.port7:
-                if (!lhRGBLightBelt) {
-                    lhRGBLightBelt = hicbitRGBLight.create(DigitalPin.P7, 30, hicbitRGBPixelMode.RGB);
-                }
-                break;
-            case hicbit_ultrasonicPort.port8:
-                if (!lhRGBLightBelt) {
-                    lhRGBLightBelt = hicbitRGBLight.create(DigitalPin.P11, 30, hicbitRGBPixelMode.RGB);
-                }
-                break;
         }
 
-        hicbit_belt_clearLight();
+        hicbit_clearLight();
     }
 
     /**
      * Set the color of the colored lights, after finished the setting please perform  the display of colored lights.
      */
-    //% weight=68 blockId=hicbit_belt_setPixelRGB block="Set light belt|%lightoffset|color to %rgb"
+    //% weight=62 blockId=hicbit_belt_setPixelRGB block="Set light belt|%lightoffset|color to %rgb"
     export function hicbit_belt_setPixelRGB(lightoffset: hicbitLightsBelt, rgb: hicbitRGBColors) {
         lhRGBLightBelt.setBeltPixelColor(lightoffset, rgb);
     }
@@ -1584,7 +1529,7 @@ namespace hicbit {
     /**
      * Display the colored lights, and set the color of the colored lights to match the use. After setting the color of the colored lights, the color of the lights must be displayed.
      */
-    //% weight=67 blockId=hicbit_belt_showLight block="Show light belt"
+    //% weight=61 blockId=hicbit_belt_showLight block="Show light belt"
     export function hicbit_belt_showLight() {
         lhRGBLightBelt.show();
     }
@@ -1592,7 +1537,7 @@ namespace hicbit {
     /**
      * Clear the color of the colored lights and turn off the lights.
      */
-    //% weight=66 blockGap=50 blockId=hicbit_belt_clearLight block="Clear light belt"
+    //% weight=60 blockGap=50 blockId=hicbit_belt_clearLight block="Clear light belt"
     export function hicbit_belt_clearLight() {
         lhRGBLightBelt.clear();
     }
